@@ -1,10 +1,12 @@
 resource "aws_s3_bucket" "data" {
+	# checkov:skip=CKV_AWS_19: ADD REASON
+	# checkov:skip=CKV_AWS_144: ADD REASON
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-data"
-  acl           = "public-read"
+  acl           = "private"
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-data"
@@ -22,6 +24,8 @@ resource "aws_s3_bucket" "data" {
     enabled = "${var.versioning_enabled}"
   }
 }
+
+
 
 resource "aws_s3_bucket_object" "data_object" {
   bucket = aws_s3_bucket.data.id
@@ -62,6 +66,18 @@ resource "aws_s3_bucket" "financials" {
   }
 
 }
+
+
+resource "aws_s3_bucket_versioning" "financials" {
+  bucket = aws_s3_bucket.financials.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
+
 
 resource "aws_s3_bucket" "operations" {
   # bucket is not encrypted
