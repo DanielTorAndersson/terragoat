@@ -12,7 +12,7 @@ resource "aws_elasticsearch_domain" "monitoring-framework" {
 
   ebs_options {
     ebs_enabled = true
-    volume_size = 30
+    volume_size = 300
   }
   tags = {
     git_commit           = "d68d2897add9bc2203a5ed0632a5cdd8ff8cefb0"
@@ -24,7 +24,11 @@ resource "aws_elasticsearch_domain" "monitoring-framework" {
     git_repo             = "terragoat"
     yor_trace            = "118fd7f8-b3d7-43d9-b418-7dd16a646a4c"
   }
+  log_publishing_options {
+    cloudwatch_log_group_arn = "CKV_ANY"
+  }
 }
+
 
 data aws_iam_policy_document "policy" {
   statement {
