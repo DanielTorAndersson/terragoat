@@ -1,4 +1,4 @@
-name: Bridgecrew
+name: checkov
 on:
   pull_request:
   push:
@@ -7,14 +7,14 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
-    - name: Run Bridgecrew 
-      id: Bridgecrew
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+    - name: Test with Checkov 
+      id: Checkov
       uses: bridgecrewio/bridgecrew-action@master
       with:
-        api-key: ${{ secrets.BC_API_KEY }}
         directory: terraform/
