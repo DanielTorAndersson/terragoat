@@ -29,6 +29,7 @@ EOF
 }
 
 resource "aws_lambda_function" "analysis_lambda" {
+  # checkov:skip=CKV_AWS_272: ADD REASON
   # lambda have plain text secrets in environment variables
   filename      = "resources/lambda_function_payload.zip"
   function_name = "${local.resource_prefix.value}-analysis"
